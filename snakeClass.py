@@ -178,6 +178,7 @@ def display(player, food, game, record):
 
 def update_screen():
     pygame.display.update()
+    # pygame.event.get() # <--- Add this line (for MAC users) if having problems with UI ###
 
 
 def initialize_game(player, game, food, agent, batch_size):
