@@ -33,7 +33,7 @@ def define_parameters():
     # Settings
     params['weights_path'] = 'weights/weights.h5'
     params['train'] = False
-    params["test"] = True
+    params['test'] = (params['train'] == False)
     params['plot_score'] = True
     params['log_path'] = 'logs/scores_' + str(datetime.datetime.now().strftime("%Y%m%d%H%M%S")) +'.txt'
     return params
