@@ -27,7 +27,7 @@ def define_parameters():
     params['first_layer_size'] = 200    # neurons in the first layer
     params['second_layer_size'] = 20   # neurons in the second layer
     params['third_layer_size'] = 50    # neurons in the third layer
-    params['episodes'] = 250
+    params['episodes'] = 100
     params['memory_size'] = 2500
     params['batch_size'] = 1000
     # Settings
