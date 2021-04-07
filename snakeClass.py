@@ -27,7 +27,7 @@ def define_parameters():
     params['first_layer_size'] = 200    # neurons in the first layer
     params['second_layer_size'] = 20   # neurons in the second layer
     params['third_layer_size'] = 50    # neurons in the third layer
-    params['episodes'] = 250          
+    params['episodes'] = 250
     params['memory_size'] = 2500
     params['batch_size'] = 1000
     # Settings
@@ -331,9 +331,11 @@ if __name__ == '__main__':
     if params['train']:
         print("Training...")
         params['load_weights'] = False   # when training, the network is not pre-trained
-        run(params)
+        total_score, mean, stdev = run(params)
+        print("total_score:", total_score, " | mean:", mean, "| stdev:", stdev)
     if params['test']:
         print("Testing...")
         params['train'] = False
         params['load_weights'] = True
-        run(params)
+        total_score, mean, stdev = run(params)
+        print("total_score:", total_score, " | mean:", mean, "| stdev:", stdev)
