@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from operator import add
 import collections
+from random import randint
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -138,6 +139,21 @@ class DQNAgent(torch.nn.Module):
             minibatch = memory
         for state, action, reward, next_state, done in minibatch:
             self.train_short_memory(state, action, reward, next_state, done)
+
+    def get_epsilon_greedy_action(self, state_old):
+        """
+        Return the epsilon-greedy action for state_old.
+        """
+        if random.uniform(0, 1) < self.epsilon:
+            # return a random action
+            final_move = np.eye(3)[randint(0,2)]
+        else:
+            # choose the best action based on the old state
+            with torch.no_grad():
+                state_old_tensor = torch.tensor(state_old.reshape((1, 11)), dtype=torch.float32).to(DEVICE)
+                prediction = self(state_old_tensor)
+                final_move = np.eye(3)[np.argmax(prediction.detach().cpu().numpy()[0])]
+        return final_move
 
     def train_short_memory(self, state, action, reward, next_state, done):
         """

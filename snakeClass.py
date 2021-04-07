@@ -266,15 +266,8 @@ def run(params):
             # get old state
             state_old = agent.get_state(game, player1, food1)
 
-            # perform random actions based on agent.epsilon, or choose the action
-            if random.uniform(0, 1) < agent.epsilon:
-                final_move = np.eye(3)[randint(0,2)]
-            else:
-                # predict action based on the old state
-                with torch.no_grad():
-                    state_old_tensor = torch.tensor(state_old.reshape((1, 11)), dtype=torch.float32).to(DEVICE)
-                    prediction = agent(state_old_tensor)
-                    final_move = np.eye(3)[np.argmax(prediction.detach().cpu().numpy()[0])]
+            # perform random actions based on agent.epsilon, or choose the best action (epsilon-greedy strategy)
+            final_move = agent.get_epsilon_greedy_action(state_old)
 
             # perform new move and get new state
             player1.do_move(final_move, player1.x, player1.y, game, food1, agent)
