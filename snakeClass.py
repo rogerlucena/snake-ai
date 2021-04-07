@@ -42,12 +42,13 @@ def define_parameters():
 class Game:
     """ Initialize PyGAME """
     
-    def __init__(self, game_width, game_height):
+    def __init__(self, game_width, game_height, will_display):
         pygame.display.set_caption('SnakeGen')
         self.game_width = game_width
         self.game_height = game_height
-        self.gameDisplay = pygame.display.set_mode((game_width, game_height + 60))
         self.bg = pygame.image.load("img/background.png")
+        if will_display:
+            self.gameDisplay = pygame.display.set_mode((game_width, game_height + 60))
         self.crash = False
         self.player = Player(self)
         self.food = Food()
@@ -245,7 +246,7 @@ def run(params):
                 pygame.quit()
                 quit()
         # Initialize classes
-        game = Game(440, 440)
+        game = Game(440, 440, params['display'])
         player1 = game.player
         food1 = game.food
 
