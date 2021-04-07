@@ -137,21 +137,7 @@ class DQNAgent(torch.nn.Module):
         else:
             minibatch = memory
         for state, action, reward, next_state, done in minibatch:
-            self.train()
-            torch.set_grad_enabled(True)
-            target = reward
-            next_state_tensor = torch.tensor(np.expand_dims(next_state, 0), dtype=torch.float32).to(DEVICE)
-            state_tensor = torch.tensor(np.expand_dims(state, 0), dtype=torch.float32, requires_grad=True).to(DEVICE)
-            if not done:
-                target = reward + self.gamma * torch.max(self.forward(next_state_tensor)[0])
-            output = self.forward(state_tensor)
-            target_f = output.clone()
-            target_f[0][np.argmax(action)] = target
-            target_f.detach()
-            self.optimizer.zero_grad()
-            loss = F.mse_loss(output, target_f)
-            loss.backward()
-            self.optimizer.step()            
+            self.train_short_memory(state, action, reward, next_state, done)
 
     def train_short_memory(self, state, action, reward, next_state, done):
         """
