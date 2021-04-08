@@ -1,0 +1,28 @@
+-- Comparisons:
+
+- Q-Learning (100 episodes):
+train: total_score: 211  | mean: 2.11 | stdev: 2.4325029716468403
+test: total_score: 105  | mean: 1.05 | stdev: 2.2890825651118374
+
+- SARSA (100 episodes):
+train: total_score: 212  | mean: 2.12 | stdev: 3.088852554106476
+test: total_score: 979  | mean: 9.79 | stdev: 12.049808246934006
+
+- Expected SARSA (100 episodes):
+train: total_score: 393  | mean: 3.93 | stdev: 5.8882780319732
+test: total_score: 2831  | mean: 28.31 | stdev: 10.882007204926893
+
+
+- Conclusion:
+
+We can clearly see that, by the end, Expected SARSA outperformed the other two algorithms, with a mean of
+28.31 points while testing for 100 episodes, after just some minutes of training (100 episodes too).
+
+The above can also be verified while seeing this agent play through the UI: it shows itself much more roubust
+than the other two, usually performing optimal actions and normally losing only when it is locked inside itself
+(situation for which it indeed has no visibility given the engineered features it has access to learn from at the moment).
+
+To go around that, for a follow up work, it would be interesting to see how the agent would peform directly receiving
+the pixels as input, discarding the current limited features, and adapting the neural network to have some
+convolutional layers too. Another interesting follow up would be to implement Double Q-Learning and compare its
+performance with the performance of the three algoritms above.
