@@ -183,14 +183,15 @@ def update_screen():
     # pygame.event.get() # <--- Add this line (for MAC users) if having problems with UI ###
 
 
-def initialize_game(player, game, food, agent, batch_size):
+def initialize_game(player, game, food, agent, batch_size, is_train):
     state_init1 = agent.get_state(game, player, food)  # [0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0]
     action = [1, 0, 0]
     player.do_move(action, player.x, player.y, game, food, agent)
     state_init2 = agent.get_state(game, player, food)
     reward1 = agent.set_reward(player, game.crash)
-    agent.remember(state_init1, action, reward1, state_init2, game.crash)
-    agent.replay_new(agent.memory, batch_size)
+    if is_train:
+        agent.remember(state_init1, action, reward1, state_init2, game.crash)
+        agent.replay_new(agent.memory, batch_size)
 
 
 def plot_seaborn(array_counter, array_score, train):
@@ -252,7 +253,7 @@ def run(params):
         food1 = game.food
 
         # Perform first move
-        initialize_game(player1, game, food1, agent, params['batch_size'])
+        initialize_game(player1, game, food1, agent, params['batch_size'], params['train'])
         if params['display']:
             display(player1, food1, game, record)
         
