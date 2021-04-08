@@ -13,7 +13,7 @@ train: total_score: 393  | mean: 3.93 | stdev: 5.8882780319732
 test: total_score: 2831  | mean: 28.31 | stdev: 10.882007204926893
 
 
-- Conclusion:
+-- Conclusion:
 
 We can clearly see that, by the end, Expected SARSA outperformed the other two algorithms, with a mean of
 28.31 points while testing for 100 episodes, after just some minutes of training (100 episodes too).
@@ -26,3 +26,16 @@ To go around that, for a follow up work, it would be interesting to see how the 
 the pixels as input, discarding the current limited features, and adapting the neural network to have some
 convolutional layers too. Another interesting follow up would be to implement Double Q-Learning and compare its
 performance with the performance of the three algoritms above.
+
+
+
+-- Interesting links:
+
+- Snake Battle Royale (article): https://davideliu.com/2020/01/24/teaching-ai-to-play-snake-with-reinforcement-learning/
+- Snake Battle Royale (GitHub): https://github.com/davide97l/Snake-Battle-Royale
+- AIs Battle Royale, the ultimate snake: https://davideliu.com/2020/02/06/ais-battle-royale-the-ultimate-snake/
+- Adversarial attacks on Deep Reinforcement Learning: https://github.com/davide97l/rl-policies-attacks-defenses
+- Teaching AI to play Snake with Genetic Algorithm: https://davideliu.com/2020/02/03/teaching-ai-to-play-snake-with-genetic-algorithm/
+- Q-Learning and CNN to play Snake: https://medium.com/@hugo.sjoberg88/using-reinforcement-learning-and-q-learning-to-play-snake-28423dd49e9b
+- Double Deep Q-Networks: https://towardsdatascience.com/double-deep-q-networks-905dd8325412
+- Execute .py file in Google Colab (free CPU/GPU): https://www.researchgate.net/post/how-to-execute-the-multiple-py-file-in-Google-Colab
