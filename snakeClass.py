@@ -22,12 +22,12 @@ DEVICE = 'cpu' # 'cuda' if torch.cuda.is_available() else 'cpu'
 def define_parameters():
     params = dict()
     # Neural Network
-    params['epsilon_decay_linear'] = 1/100
     params['learning_rate'] = 0.00013629
     params['first_layer_size'] = 200    # neurons in the first layer
     params['second_layer_size'] = 20   # neurons in the second layer
     params['third_layer_size'] = 50    # neurons in the third layer
     params['episodes'] = 100
+    params['epsilon_decay_linear'] = 1.0/params['episodes']
     params['memory_size'] = 2500
     params['batch_size'] = 1000
     # Settings
