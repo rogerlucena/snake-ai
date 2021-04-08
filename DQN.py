@@ -31,6 +31,18 @@ class DQNAgent(torch.nn.Module):
         self.load_weights = params['load_weights']
         self.optimizer = None
         self.network()
+        self.agent_type = params['agent_type']
+        if params['train']:
+            supported_agent_types = {
+                'q_learning': 'Q-Learning',
+                'sarsa': 'SARSA',
+                'expected_sarsa': 'Expected SARSA',
+            }
+            if self.agent_type in supported_agent_types:
+                print('Using', supported_agent_types[self.agent_type])
+            else:
+                print('Agent "', self.agent_type, '" not found, using default Q-Learning instead', sep='')
+                self.agent_type = 'q_learning'
           
     def network(self):
         # Layers
@@ -155,6 +167,30 @@ class DQNAgent(torch.nn.Module):
                 final_move = np.eye(3)[np.argmax(prediction.detach().cpu().numpy()[0])]
         return final_move
 
+    def get_target(self, reward, next_state):
+        """
+        Return the appropriate TD target depending on the type of the
+        agent (Q-Learning, SARSA or Expected-SARSA).
+        """
+        next_state_tensor = torch.tensor(next_state.reshape((1, 11)), dtype=torch.float32).to(DEVICE)
+        q_values_next_state = self.forward(next_state_tensor[0])
+        if self.agent_type == 'q_learning':
+            target = reward + self.gamma * torch.max(q_values_next_state) # Q-Learning is off-policy
+        elif self.agent_type == 'sarsa':
+            next_action = self.get_epsilon_greedy_action(next_state) # SARSA is on-policy
+            q_value_next_state_action = q_values_next_state[np.argmax(next_action)]
+            target = reward + self.gamma * q_value_next_state_action
+        elif self.agent_type == 'expected_sarsa':
+            probabilities_for_actions = np.array([self.epsilon/3, self.epsilon/3, self.epsilon/3])
+            q_values_next_state_numpy = q_values_next_state.detach().cpu().numpy()
+            best_action_index = np.argmax(q_values_next_state_numpy)
+            probabilities_for_actions[best_action_index] += 1 - self.epsilon
+            expected_next_q_value = np.dot(probabilities_for_actions, q_values_next_state_numpy)
+            target = reward + self.gamma * expected_next_q_value
+        else:
+            raise ValueError('agent_type in get_target should necessarily be one of the supported agent types')
+        return target
+
     def train_short_memory(self, state, action, reward, next_state, done):
         """
         Train the DQN agent on the <state, action, reward, next_state, is_done>
@@ -163,10 +199,9 @@ class DQNAgent(torch.nn.Module):
         self.train()
         torch.set_grad_enabled(True)
         target = reward
-        next_state_tensor = torch.tensor(next_state.reshape((1, 11)), dtype=torch.float32).to(DEVICE)
         state_tensor = torch.tensor(state.reshape((1, 11)), dtype=torch.float32, requires_grad=True).to(DEVICE)
         if not done:
-            target = reward + self.gamma * torch.max(self.forward(next_state_tensor[0]))
+            target = self.get_target(reward, next_state)
         output = self.forward(state_tensor)
         target_f = output.clone()
         target_f[0][np.argmax(action)] = target

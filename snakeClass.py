@@ -36,6 +36,7 @@ def define_parameters():
     params['test'] = (params['train'] == False)
     params['plot_score'] = True
     params['log_path'] = 'logs/scores_' + str(datetime.datetime.now().strftime("%Y%m%d%H%M%S")) +'.txt'
+    params['agent_type'] = 'q_learning' # 'q_learning' | 'sarsa' | 'expected_sarsa'
     return params
 
 
