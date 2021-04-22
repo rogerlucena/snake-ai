@@ -116,8 +116,6 @@ class Player(object):
             for i in range(food):
                 x_temp, y_temp = self.position[len(self.position) - 1 - i]
                 game.gameDisplay.blit(self.image, (x_temp, y_temp))
-
-            update_screen()
         else:
             pygame.time.wait(300)
 
@@ -140,7 +138,6 @@ class Food(object):
 
     def display_food(self, x, y, game):
         game.gameDisplay.blit(self.image, (x, y))
-        update_screen()
 
 
 def eat(player, food, game):
@@ -176,6 +173,7 @@ def display(player, food, game, record):
     display_ui(game, game.score, record)
     player.display_player(player.position[-1][0], player.position[-1][1], player.food, game)
     food.display_food(food.x_food, food.y_food, game)
+    update_screen()
 
 
 def update_screen():
