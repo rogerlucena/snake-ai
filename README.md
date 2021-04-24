@@ -5,7 +5,7 @@
 ## Introduction
 The goal of this project is to develop an AI bot able to learn how to play the popular game Snake from scratch. In order to do it, we use a Deep Reinforcement Learning algorithm. This approach consists on giving the agent parameters related to its state, and a positive or negative reward based on its actions. No rules about the game are given, and initially the bot has no information on what it needs to do. The goal for the agent is to figure it out and elaborate a strategy to maximize the score - or the reward.
 
-We will see how a Deep Reinforcement Learning algorithm learns to play Snake, starting from 0 and scoring up to 55 points while showing a solid strategy after only 5 minutes of training (100 games played).
+We will see how a Deep Reinforcement Learning algorithm learns to play Snake, starting from 0 and scoring up to 55 points while showing a solid strategy after only 5 minutes of training (100 games played). Video of the trained agent available [here](https://youtu.be/CGNs8cxwJrc).
 
 In addition to that, it is also possible to run the Bayesian Optimization method to find the optimal parameters of the Deep Neural Network, as well as some parameters of the Deep RL approach.
 
