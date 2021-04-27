@@ -141,7 +141,7 @@ class DQNAgent(torch.nn.Module):
         """
         self.memory.append((state, action, reward, next_state, done))
 
-    def replay_new(self, memory, batch_size):
+    def replay_mem(self, memory, batch_size):
         """
         Replay memory.
         """

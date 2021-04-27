@@ -189,7 +189,7 @@ def initialize_game(player, game, food, agent, batch_size, is_train):
     reward1 = agent.set_reward(player, game.crash)
     if is_train:
         agent.remember(state_init1, action, reward1, state_init2, game.crash)
-        agent.replay_new(agent.memory, batch_size)
+        agent.replay_mem(agent.memory, batch_size)
 
 
 def plot_seaborn(array_counter, array_score, train):
@@ -292,7 +292,7 @@ def run(params):
                 pygame.time.wait(params['speed'])
             steps+=1
         if params['train']:
-            agent.replay_new(agent.memory, params['batch_size'])
+            agent.replay_mem(agent.memory, params['batch_size'])
         counter_games += 1
         total_score += game.score
         print(f'Game {counter_games}      Score: {game.score}')
